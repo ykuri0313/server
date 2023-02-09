@@ -1,11 +1,11 @@
 module Api
   module V1
-    class PostsController < SecuredController
-      skip_before_action :authorize_request, only: %i[index show]
+    class PropertiesController < SecuredController
+      # skip_before_action :authorize_request, only: %i[index show]
 
       def index
-        posts = Post.all
-        render json: posts
+        properties = Property.all
+        render json: properties, root: 'properties', adapter: :json, each_serializer: Property::BaseSerializer
       end
 
       def show

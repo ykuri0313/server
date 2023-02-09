@@ -4,7 +4,7 @@ class SecuredController < ApplicationController
   private
 
   def authorize_request
-    authorize_request = AuthorizationService.new(request.headers)
+    authorize_request = AuthorizationService.new(cookies[:authorization_token])
     @current_user = authorize_request.current_user
   rescue JWT::VerificationError, JWT::DecodeError
     render json: { errors: ['Not Authenticated'] }, status: :unauthorized
