@@ -11,4 +11,3 @@
 - 決済Saas：　Stripe（予定）
 ### フロントエンドリポジトリ
 https://github.com/ykuri0313/client
-
