@@ -1,25 +1,41 @@
 module Api
   module V1
     class PropertiesController < SecuredController
-      # skip_before_action :authorize_request, only: %i[index show]
+      skip_before_action :authorize_request, only: %i[index show]
 
       def index
-        properties = Property.all
+        properties = Property.published
+        render json: properties, root: 'properties', adapter: :json, each_serializer: Property::BaseSerializer
+      end
+
+      def closet
+        properties = @current_user.properties.draft
         render json: properties, root: 'properties', adapter: :json, each_serializer: Property::BaseSerializer
       end
 
       def show
-        post = Post.find(params[:id])
-        render json: post
+        property = Property.find(params[:id])
+        render json: property, serializer: Property::BaseSerializer
       end
     
       def create
-        post = @current_user.posts.build(post_params)
+        property = @current_user.properties.build(property_params)
     
-        if post.save
-          render json: post
+        if property.save
+          render status: 200, json: property, root: 'property', adapter: :json, serializer: Property::BaseSerializer
         else
-          render json: post.errors, status: :unprocessable_entity
+          render json: property.errors, status: :unprocessable_entity
+        end
+      end
+
+      def attach_image
+        property = Property.find_by!(id: params[:property_id])
+        property.update!(status: "published")
+        
+        if property.images.attach(params[:file])
+          render status: 200
+        else
+          render status: 500
         end
       end
     
@@ -30,8 +46,16 @@ module Api
     
       private
     
-      def post_params
-        params.permit(:title,:content)
+      def property_params
+        params.permit(
+          :name,
+          :description,
+          :is_purchasable,
+          :rental_period,
+          :price
+          ).merge(
+            status: "draft"
+          )
       end
     end
   end

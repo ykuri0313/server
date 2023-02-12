@@ -52,7 +52,11 @@ ActiveRecord::Schema.define(version: 2023_02_09_041419) do
   create_table "properties", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name", null: false
-    t.boolean "is_purchasable", default: true, null: false
+    t.string "description", null: false
+    t.integer "rental_period", null: false
+    t.integer "price", null: false
+    t.boolean "is_purchasable", default: false, null: false
+    t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_properties_on_user_id"
