@@ -19,4 +19,4 @@ https://github.com/ykuri0313/client
 <img width="973" alt="スクリーンショット 2023-02-13 19 26 30" src="https://user-images.githubusercontent.com/124572799/218433341-6bdbbc95-5292-4ee8-a313-b7c987ff544c.png">
 
 ## その他
-目下開発中....これからどんどん機能追加していく予定です！
+目下開発中....これからどんどん機能追加していく。。。！
